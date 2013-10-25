@@ -1,5 +1,6 @@
 #include <unittest++/UnitTest++.h>
 #include "linkedlist.h"
+#include <stdint.h>
 
 struct test_struct_t {
 	int var;
@@ -10,7 +11,7 @@ TEST(ListInitialize)
 {
 	test_struct_t a;
 	a.var = 1;
-	ListInitialize(&a.node);	
+	ListInitialize(&a.node);
 	CHECK_EQUAL(a.node.nextp,&a.node);
 	CHECK_EQUAL(a.node.prevp,&a.node);
 
@@ -20,7 +21,7 @@ TEST(ListAddEnd2) {
 	test_struct_t a,b;
 	a.var = 1;
 	b.var = 2;
-	ListInitialize(&a.node);	
+	ListInitialize(&a.node);
 	ListAddEnd(&a.node, &b.node);
 	CHECK_EQUAL(a.node.nextp,&b.node);
 	CHECK_EQUAL(a.node.prevp,&b.node);
@@ -34,7 +35,7 @@ TEST(ListAddEnd3) {
 	a.var = 1;
 	b.var = 2;
 	c.var = 3;
-	ListInitialize(&a.node);	
+	ListInitialize(&a.node);
 	ListAddEnd(&a.node, &b.node);
 	ListAddEnd(&a.node, &c.node);
 	CHECK_EQUAL(a.node.nextp,&b.node);
@@ -50,11 +51,11 @@ TEST(ListAddEnd3) {
 TEST(ListMove3) {
 	test_struct_t a,b,c;
 	ListNode_t linkedList, *cur_nodep;
-	
+
 	a.var = 1;
 	b.var = 2;
 	c.var = 3;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddEnd(&linkedList, &a.node);
 	ListAddEnd(&linkedList, &b.node);
 	ListAddEnd(&linkedList, &c.node);
@@ -73,7 +74,7 @@ TEST(ListMove1) {
 	test_struct_t a;
 	ListNode_t *cur_nodep;
 	a.var = 1;
-	ListInitialize(&a.node);	
+	ListInitialize(&a.node);
 	int expected_num=1;
 	cur_nodep =&a.node;
 	do {
@@ -89,14 +90,14 @@ TEST(ListMove1) {
 TEST(ListAddEnd2_move) {
 	test_struct_t a,*cur;
 	a.var = 1;
-	ListInitialize(&a.node);	
+	ListInitialize(&a.node);
 	cur = NODE_TO_ENTRY(test_struct_t,node, &a.node);
 	CHECK_EQUAL(cur,&a);
 	CHECK_EQUAL(cur->var,a.var);
 }
 TEST(ListLength) {
 	ListNode_t linkedList;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	CHECK_EQUAL(ListLength(&linkedList),0);
 	test_struct_t a;
 	a.var = 1;
@@ -115,7 +116,7 @@ TEST(ListRemoveA) {
 	b.var = 2;
 	c.var = 3;
 	d.var = 4;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddEnd(&linkedList, &a.node);
 	ListAddEnd(&linkedList, &b.node);
 	ListAddEnd(&linkedList, &c.node);
@@ -151,7 +152,7 @@ TEST(ListApplyAllSum) {
 	b.var = 2;
 	c.var = 3;
 	d.var = 4;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddEnd(&linkedList, &a.node);
 	ListAddEnd(&linkedList, &b.node);
 	ListAddEnd(&linkedList, &c.node);
@@ -170,7 +171,7 @@ TEST(ListAddFirst) {
 	b.var = 2;
 	c.var = 3;
 	d.var = 4;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddEnd(&linkedList, &a.node);
 	ListAddEnd(&linkedList, &b.node);
 	ListAddEnd(&linkedList, &c.node);
@@ -181,9 +182,9 @@ TEST(ListAddFirst) {
 	CHECK_EQUAL(10, sum);
 }
 static int  isMatch(ListNode_t * nodep, void * datap) {
-	int number = (intptr_t) datap;
+	long number = (intptr_t) datap;
 	test_struct_t *cur = NODE_TO_ENTRY(test_struct_t,node, nodep);
-	if (number == cur->var) 
+	if (number == cur->var)
 		return 1;
 	return 0;
 }
@@ -196,7 +197,7 @@ TEST(ListFindFound) {
 	b.var = 2;
 	c.var = 3;
 	d.var = 4;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddEnd(&linkedList, &a.node);
 	ListAddEnd(&linkedList, &b.node);
 	ListAddEnd(&linkedList, &c.node);
@@ -220,7 +221,7 @@ TEST(ListSort) {
 	b.var = 2;
 	c.var = 3;
 	d.var = 4;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddBegin(&linkedList, &a.node);
 	ListAddBegin(&linkedList, &b.node);
 	ListAddBegin(&linkedList, &c.node);
@@ -242,7 +243,7 @@ TEST(ListSort2) {
 	b.var = 3;
 	c.var = 2;
 	d.var = 1;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddBegin(&linkedList, &a.node);
 	ListAddBegin(&linkedList, &b.node);
 	ListAddBegin(&linkedList, &c.node);
@@ -266,7 +267,7 @@ TEST(ListSort3) {
 	b.var = 3;
 	c.var = 2;
 	d.var = 1;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddBegin(&linkedList, &a.node);
 	ListAddBegin(&linkedList, &b.node);
 	ListAddBegin(&linkedList, &c.node);
@@ -289,7 +290,7 @@ TEST(ListAddSorted) {
 	b.var = 3;
 	c.var = 2;
 	d.var = 1;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddSorted(&linkedList, &a.node,ts_compare, NULL);
 	ListAddSorted(&linkedList, &c.node,ts_compare, NULL);
 	ListAddSorted(&linkedList, &b.node,ts_compare, NULL);
@@ -311,7 +312,7 @@ TEST(ListFind) {
 	b.var = 3;
 	c.var = 2;
 	d.var = 1;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddSorted(&linkedList, &a.node,ts_compare, NULL);
 	ListAddSorted(&linkedList, &c.node,ts_compare, NULL);
 	ListAddSorted(&linkedList, &b.node,ts_compare, NULL);
@@ -331,7 +332,7 @@ TEST(ListFindLastGE) {
 	a.var = 4;
 	b.var = 3;
 	d.var = 1;
-	ListInitialize(&linkedList);	
+	ListInitialize(&linkedList);
 	ListAddSorted(&linkedList, &a.node,ts_compare_rev, NULL);
 	ListAddSorted(&linkedList, &b.node,ts_compare_rev, NULL);
 	ListAddSorted(&linkedList, &d.node,ts_compare_rev, NULL);
